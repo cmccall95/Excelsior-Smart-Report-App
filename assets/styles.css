@@ -1,0 +1,93 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.content-container {
+    display: flex;
+    flex: 1;
+    max-height: calc(100vh - 140px); /* Subtracting space for the title */
+    overflow: hidden; /* Ensuring the content-container does not cause scroll */
+}
+
+.left-panel {
+    flex: 0 0 250px; /* You can adjust this width */
+    overflow-y: auto;
+    border-right: thin lightgrey solid;
+    padding-right: 20px;
+    margin-right: 20px;
+}
+
+.right-panel {
+    flex: 1;
+    display: flex; /* Add this */
+    flex-direction: column; /* Add this */
+    overflow: auto;/*hidden; *//*auto;*/
+}
+
+#table-container {
+    /*height: calc(100vh - 100px);*/
+    flex: 1;
+    overflow: auto;
+    /*height: 100%;*/
+}
+
+/*.custom-loading .dash-spinner .dash-spinner-inner, 
+.custom-loading .dash-spinner .dash-spinner-inner:before, 
+.custom-loading .dash-spinner .dash-spinner-inner:after {
+    border-color: #194F90;
+    border-top-color: #3A96D8;
+}*/
+
+.loader-wrapper > div {
+    visibility: visible !important;
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust 0.7 to your desired level of transparency */
+}
+
+/*Styling of tabulator's download button*/
+#download {
+    background-image: url('/assets/Microsoft-Excel-01.svg');
+    background-repeat: no-repeat;
+    background-position: center left 10px; /* Adjust this to position your SVG icon */
+    background-color: transparent; /* This assumes you want to remove the default background color */
+    color: transparent; /*Make text transparent without altering button/text size.*/
+    background-size: 15px 15px;
+    border: none; /* This removes the border. Adjust accordingly if you need a border */
+    padding-left: 40px; /* This creates space on the left side of the text for the SVG. Adjust if necessary. */
+    /*color: #333;  Color for the "Export" text. Adjust as needed */
+    cursor: pointer;
+
+}
+
+/* This targets the main Tabulator table */
+.tabulator {
+    background-color: white !important; /* Use !important to override other styles if needed */
+}
+
+.tabulator-cell[title="X"] {
+    color: #FF0000 !important;
+    font-weight: bold !important;
+}
+
+/* Make all rows bold */
+/*.tabulator-row {
+    font-weight: bold;
+}/*
+
+
+/* Un-bold child rows */
+/*.tabulator-tree-level-1,
+.tabulator-tree-level-2,
+.tabulator-tree-level-3,
+.tabulator-tree-level-n {
+    font-weight: normal;
+}*/
+
+
+
+
+
+
+
