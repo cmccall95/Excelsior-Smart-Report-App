@@ -10,11 +10,6 @@ pool:
   name: local
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.9'
-  displayName: 'Use Python 3.9'
-
 - script: |
     python -m venv venv
     venv\Scripts\activate
@@ -35,3 +30,11 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
   displayName: 'Package application'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Pay-As-You-Go'
+    appType: 'webApp'
+    appName: 'ExcelsiorSmartReportTest'
+    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+  displayName: 'Deploy to Azure Web App'
