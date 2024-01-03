@@ -34,14 +34,14 @@ ns = Namespace("myNamespace", "tabulator")
 record_id = None
 
 def test_layout(record_id):
-    assets_path = './assets'  # Adjust the path if necessary
-    try:
-        file_list = os.listdir(assets_path)
-        files_str = ', '.join(file_list)
-    except FileNotFoundError:
-        files_str = "Assets directory not found."
+    # assets_path = './assets'  # Adjust the path if necessary
+    # try:
+    #     file_list = os.listdir(assets_path)
+    #     files_str = ', '.join(file_list)
+    # except FileNotFoundError:
+    #     files_str = "Assets directory not found."
         
-    print(files_str)
+    # print(files_str)
             
     if record_id is None:
             return html.Div([
