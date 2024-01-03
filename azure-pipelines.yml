@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: local #'ubuntu-latest'
+  name: local2 #'ubuntu-latest'
 
 steps:
 - task: UsePythonVersion@0
