@@ -15,12 +15,13 @@ steps:
     venv\Scripts\activate
     python -m pip install --upgrade pip
     pip install -r requirements.txt
+    pytest
   displayName: 'Set up Python environment and install dependencies'
 
-- script: |
-    venv\Scripts\activate
-    pytest
-  displayName: 'Run unit tests'
+# - script: |
+#     venv\Scripts\activate
+#     pytest
+#   displayName: 'Run unit tests'
   
 - script: |
     rmdir /s /q venv
