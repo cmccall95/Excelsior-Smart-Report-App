@@ -7,9 +7,14 @@ trigger:
 - master
 
 pool:
-  name: local #'ubuntu-latest'
+  name: local
 
 steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.9'
+  displayName: 'Use Python 3.9'
+
 - script: |
     python -m venv venv
     venv\Scripts\activate
@@ -22,7 +27,6 @@ steps:
     pytest
   displayName: 'Run unit tests'
   
-  # Package the entire application including the assets folder
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)'
@@ -31,7 +35,3 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
   displayName: 'Package application'
-
-# Optionally, add steps to publish or deploy the package
-
-# Add additional steps for packaging and deployment if necessary
