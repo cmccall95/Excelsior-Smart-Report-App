@@ -33,7 +33,7 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: '609ec36e-07a8-453b-a3b0-81ad0490291a'
+    azureSubscription: 'ExcelsiorSC'
     appType: 'webApp'
     appName: 'ExcelsiorSmartReportTest'
     package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
