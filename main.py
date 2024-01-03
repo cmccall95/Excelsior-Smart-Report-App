@@ -18,6 +18,8 @@ from functools import partial
 from waitress import serve
 #from flask_cors import CORS #<< Simulate Cors
 
+#http://localhost:8000/?parentRid=123
+
 from dotenv import load_dotenv
 import os
 import base64
@@ -32,6 +34,15 @@ ns = Namespace("myNamespace", "tabulator")
 record_id = None
 
 def test_layout(record_id):
+    assets_path = './assets'  # Adjust the path if necessary
+    try:
+        file_list = os.listdir(assets_path)
+        files_str = ', '.join(file_list)
+    except FileNotFoundError:
+        files_str = "Assets directory not found."
+        
+    print(files_str)
+            
     if record_id is None:
             return html.Div([
                     #dcc.Location(id='url', refresh=False),
@@ -46,7 +57,6 @@ def test_layout(record_id):
                     html.H3(f"Function is working"),
                 ])
         
-
 def tree_to_dataframe(tree, parent_data=None): #Converts tree to dataframe (works but displays "name" for the lot field because the field id is not carried over to the data)
     rows = []
     if parent_data is None:
