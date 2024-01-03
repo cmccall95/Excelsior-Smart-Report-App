@@ -34,11 +34,3 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
   displayName: 'Package application'
-
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'ExcelsiorSC'
-    appType: 'webApp'
-    appName: 'ExcelsiorSmartReportTest'
-    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-  displayName: 'Deploy to Azure Web App'
