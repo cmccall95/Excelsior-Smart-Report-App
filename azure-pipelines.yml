@@ -16,22 +16,22 @@ steps:
     python -m pip install --upgrade pip
     pip install -r requirements.txt
     pytest
-  displayName: 'Set up Python environment and install dependencies'
+  displayName: 'Run tests in virtual environment'
 
 # - script: |
 #     venv\Scripts\activate
 #     pytest
 #   displayName: 'Run unit tests'
   
-- script: |
-    rmdir /s /q venv
-  displayName: 'Remove venv before packaging'
+# - script: |
+#     rmdir /s /q venv
+#   displayName: 'Remove venv before packaging'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Package application'
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.SourcesDirectory)'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+#   displayName: 'Package application'
