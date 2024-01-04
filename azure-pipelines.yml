@@ -16,22 +16,26 @@ steps:
     python -m pip install --upgrade pip
     pip install -r requirements.txt
     pytest
-  displayName: 'Run tests in virtual environment'
+  displayName: 'Run tests in virtual environment $(python.version)'
 
-# - script: |
-#     venv\Scripts\activate
-#     pytest
-#   displayName: 'Run unit tests'
   
 # - script: |
 #     rmdir /s /q venv
 #   displayName: 'Remove venv before packaging'
 
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(Build.SourcesDirectory)'
-#     includeRootFolder: false
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-#   displayName: 'Package application'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Package application'
+
+# Add deployment step here (ensure this is configured correctly)
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'ExcelsiorSC'
+    appType: 'webApp'
+    appName: 'ExcelsiorSmartReportV3'
+    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
