@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 #ignore the virtual environment
-venv/
+vir_env/

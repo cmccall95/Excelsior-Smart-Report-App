@@ -10,11 +10,11 @@ from dash_tabulator import DashTabulator
 from dash_extensions.javascript import Namespace 
 import webbrowser
 from threading import Timer
-import json #
-import pandas as pd #
+import json
+import pandas as pd
 import urllib.parse as parse
-from pprint import pprint
-from functools import partial
+# from pprint import pprint
+# from functools import partial
 from waitress import serve
 #from flask_cors import CORS #<< Simulate Cors
 
@@ -95,7 +95,7 @@ def construct_tabulator_table(data, columns, options, downloadButtonType=None, t
 
 external_scripts=[
     'https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js', 
-    '/assets/printingFunc.js',
+    #'/assets/printingFunc.js',
     'https://printjs-4de6.kxcdn.com/print.min.js',
     'https://oss.sheetjs.com/sheetjs/xlsx.full.min.js',
     #'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js',
