@@ -7,8 +7,8 @@ trigger:
 - master
 
 pool:
-  name: local # Change this if you want to use a Microsoft-hosted agent like 'ubuntu-latest'
-  #vmImage: ubuntu-latest
+  #name: local # Change this if you want to use a Microsoft-hosted agent like 'ubuntu-latest'
+  vmImage: windows-latest
 
 stages:
   - stage: Deploy
@@ -18,9 +18,9 @@ stages:
         displayName: 'Deploy to Azure Web App'
         steps:
         - task: UsePythonVersion@0
-          displayName: 'Use Python 3.8'
+          displayName: 'Use Python 3.8.6'
           inputs:
-              versionSpec: '3.8'
+              versionSpec: '3.8.6'
               addToPath: true
               architecture: 'x64'
               githubToken: $(githubToken)
