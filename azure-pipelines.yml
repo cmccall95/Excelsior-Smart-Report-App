@@ -17,13 +17,10 @@ stages:
       - job: DeploymentJob
         displayName: 'Deploy to Azure Web App'
         steps:
-        - task: UsePythonVersion@0
-          displayName: 'Use Python 3.8'
-          inputs:
-              versionSpec: '3.8'
-              addToPath: true
-              architecture: 'x64'
-              githubToken: $(githubToken)
+        - script: |
+              curl -o python-3.8.6-amd64.exe https://www.python.org/ftp/python/3.8.6/python-3.8.6-amd64.exe
+              ./python-3.8.6-amd64.exe /quiet InstallAllUsers=1 PrependPath=1
+          displayName: 'Download and install Python 3.8'
                     
         - script: |
               python -m venv antenv
