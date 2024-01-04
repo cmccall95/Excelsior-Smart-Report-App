@@ -3,38 +3,60 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
-trigger:
+trigger: 
 - master
 
 pool:
-  name: local
+  #name: local # Change this if you want to use a Microsoft-hosted agent like 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
-steps:
-- script: |
-    python -m venv venv
-    venv\Scripts\activate
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    pytest
-  displayName: 'Run tests in virtual environment $(python.version)'
+stages:
+  - stage: Deploy
+    displayName: 'Deploy Stage'
+    jobs:
+      - job: DeploymentJob
+        displayName: 'Deploy to Azure Web App'
+        steps:
+        - task: UsePythonVersion@0
+          inputs:
+              versionSpec: '3.8'
+          displayName: 'Use Python 3.8'
 
-- script: |
-    rmdir /s /q venv
-  displayName: 'Remove venv before packaging'
+        - script: |
+              python -m venv antenv
+              antenv\Scripts\activate
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+          workingDirectory: $(Build.SourcesDirectory)
+          displayName: "Install requirements"
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Package application'
-
-# Add deployment step here (ensure this is configured correctly)
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'ExcelsiorSC'
-    appType: 'webApp'
-    appName: 'ExcelsiorSmartReportV3'
-    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        - task: ArchiveFiles@2
+          inputs:
+            rootFolderOrFile: '$(Build.SourcesDirectory)'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+            replaceExistingArchive: true
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'drop'
+            publishLocation: 'pipeline'
+          
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        
+        - task: AzureWebApp@1
+          inputs:
+            azureSubscription: 'ExcelsiorSC' # Replace with your Azure subscription
+            appType: 'webAppLinux'
+            appName: 'ExcelsiorSmartReportV3' # Replace with your Azure Web App name
+            deployToSlotOrASE: false
+            resourceGroupName: 'Excelsior' # Replace with your resource group name
+            package: '$(System.ArtifactsDirectory)/$(Build.BuildId).zip'
+            startUpCommand: 'waitress-serve --listen=*:8000 main:flask_server'
+            #startUpCommand: 'waitress-serve --listen=*:8000 main:app' # Replace with your startup command
