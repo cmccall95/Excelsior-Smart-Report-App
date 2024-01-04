@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  name: local #'ubuntu-latest'
+  name: local
 
 steps:
 - script: |
@@ -15,14 +15,13 @@ steps:
     venv\Scripts\activate
     python -m pip install --upgrade pip
     pip install -r requirements.txt
-  displayName: 'Set up Python environment and install dependencies'
+    pytest
+  displayName: 'Run tests in virtual environment $(python.version)'
 
 - script: |
-    venv\Scripts\activate
-    pytest
-  displayName: 'Run unit tests'
-  
-  # Package the entire application including the assets folder
+    rmdir /s /q venv
+  displayName: 'Remove venv before packaging'
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)'
@@ -32,6 +31,10 @@ steps:
     replaceExistingArchive: true
   displayName: 'Package application'
 
-# Optionally, add steps to publish or deploy the package
-
-# Add additional steps for packaging and deployment if necessary
+# Add deployment step here (ensure this is configured correctly)
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'ExcelsiorSC'
+    appType: 'webApp'
+    appName: 'ExcelsiorSmartReportV3'
+    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
