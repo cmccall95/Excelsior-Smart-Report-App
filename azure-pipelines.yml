@@ -18,10 +18,13 @@ stages:
         displayName: 'Deploy to Azure Web App'
         steps:
         - task: UsePythonVersion@0
+        displayName: 'Use Python 3.8'
           inputs:
               versionSpec: '3.8'
-          displayName: 'Use Python 3.8'
-
+              addToPath: true
+              architecture: 'x64'
+              githubToken: $(githubToken)
+                    
         - script: |
               python -m venv antenv
               antenv\Scripts\activate
