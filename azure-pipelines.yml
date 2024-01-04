@@ -21,19 +21,19 @@ stages:
         #     curl -o python-3.8.6-amd64.exe https://www.python.org/ftp/python/3.8.6/python-3.8.6-amd64.exe
         #     python-3.8.6-amd64.exe /quiet InstallAllUsers=1 PrependPath=1
         #   displayName: 'Download and install Python 3.8.6'
-        
-        - script: |
-            python --version
-          displayName: 'Check Python version'
 
         - script: |
-              python -m venv antenv
+              "C:\Users\cmccall\AppData\Local\Programs\Python\Python38\python.exe" -m venv antenv
               antenv\Scripts\activate
               python -m pip install --upgrade pip
               pip install -r requirements.txt
           workingDirectory: $(Build.SourcesDirectory)
-          displayName: "Install requirements"
+          displayName: 'Install requirements with Python 3.8'
 
+        - script: |
+            python --version
+          displayName: 'Check Python version'
+          
         - task: ArchiveFiles@2
           inputs:
             rootFolderOrFile: '$(Build.SourcesDirectory)'
