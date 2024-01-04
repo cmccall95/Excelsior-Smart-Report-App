@@ -18,10 +18,9 @@ steps:
     pytest
   displayName: 'Run tests in virtual environment $(python.version)'
 
-  
-# - script: |
-#     rmdir /s /q venv
-#   displayName: 'Remove venv before packaging'
+- script: |
+    rmdir /s /q venv
+  displayName: 'Remove venv before packaging'
 
 - task: ArchiveFiles@2
   inputs:
