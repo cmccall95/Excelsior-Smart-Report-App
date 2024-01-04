@@ -133,8 +133,8 @@ def update_record_id(search):
     
     return dynamic_layout
 
-if __name__ == '__main__': #Waitress Local Server for testing 
-    serve(app.server, host="0.0.0.0", port=8000)
+# if __name__ == '__main__': #Waitress Local Server for testing #No need for this for the Azure
+#     serve(app.server, host="0.0.0.0", port=8000)
 
 
 
