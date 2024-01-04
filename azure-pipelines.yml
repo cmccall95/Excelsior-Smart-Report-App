@@ -27,13 +27,14 @@ stages:
               antenv\Scripts\activate
               python -m pip install --upgrade pip
               pip install -r requirements.txt
+              pip install waitress
           workingDirectory: $(Build.SourcesDirectory)
-          displayName: 'Install requirements with Python 3.8'
+          displayName: 'Install requirements and waitress with Python 3.8'
 
         - script: |
             python --version
           displayName: 'Check Python version'
-          
+
         - task: ArchiveFiles@2
           inputs:
             rootFolderOrFile: '$(Build.SourcesDirectory)'
