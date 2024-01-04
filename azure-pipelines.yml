@@ -3,65 +3,25 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
-trigger: 
+trigger:
 - master
 
 pool:
-  name: local # Change this if you want to use a Microsoft-hosted agent like 'ubuntu-latest'
-  #vmImage: windows-latest
+  name: local
 
-stages:
-  - stage: Deploy
-    displayName: 'Deploy Stage'
-    jobs:
-      - job: DeploymentJob
-        displayName: 'Deploy to Azure Web App'
-        steps:
-        # - script: |
-        #     curl -o python-3.8.6-amd64.exe https://www.python.org/ftp/python/3.8.6/python-3.8.6-amd64.exe
-        #     python-3.8.6-amd64.exe /quiet InstallAllUsers=1 PrependPath=1
-        #   displayName: 'Download and install Python 3.8.6'
+steps:
+- script: |
+    python -m venv venv
+    venv\Scripts\activate
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Set up Python and install dependencies'
 
-        - script: |
-              "C:\Users\cmccall\AppData\Local\Programs\Python\Python38\python.exe" -m venv antenv
-              antenv\Scripts\activate
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
-              pip install waitress
-          workingDirectory: $(Build.SourcesDirectory)
-          displayName: 'Install requirements and waitress with Python 3.8'
+- script: |
+    venv\Scripts\activate
+    pytest
+  displayName: 'Run tests'
 
-        - script: |
-            python --version
-          displayName: 'Check Python version'
-
-        - task: ArchiveFiles@2
-          inputs:
-            rootFolderOrFile: '$(Build.SourcesDirectory)'
-            includeRootFolder: false
-            archiveType: 'zip'
-            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-            replaceExistingArchive: true
-        - task: PublishPipelineArtifact@1
-          inputs:
-            targetPath: '$(Build.ArtifactStagingDirectory)'
-            artifactName: 'drop'
-            publishLocation: 'pipeline'
-          
-        - task: DownloadBuildArtifacts@1
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'drop'
-            downloadPath: '$(System.ArtifactsDirectory)'
-        
-        - task: AzureWebApp@1
-          inputs:
-            azureSubscription: 'ExcelsiorSC' # Replace with your Azure subscription
-            appType: 'webAppLinux'
-            appName: 'ExcelsiorSmartReportV3' # Replace with your Azure Web App name
-            deployToSlotOrASE: false
-            resourceGroupName: 'Excelsior' # Replace with your resource group name
-            package: '$(System.ArtifactsDirectory)/$(Build.BuildId).zip'
-            startUpCommand: 'waitress-serve --listen=*:8000 main:flask_server'
-            #startUpCommand: 'waitress-serve --listen=*:8000 main:app' # Replace with your startup command
+- script: |
+    python --version
+  displayName: 'Check Python version'
