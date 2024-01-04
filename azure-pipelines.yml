@@ -7,8 +7,8 @@ trigger:
 - master
 
 pool:
-  #name: local # Change this if you want to use a Microsoft-hosted agent like 'ubuntu-latest'
-  vmImage: ubuntu-latest
+  name: local # Change this if you want to use a Microsoft-hosted agent like 'ubuntu-latest'
+  #vmImage: ubuntu-latest
 
 stages:
   - stage: Deploy
