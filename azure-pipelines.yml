@@ -18,9 +18,9 @@ stages:
         displayName: 'Deploy to Azure Web App'
         steps:
         - task: UsePythonVersion@0
-          displayName: 'Use Python 3.8.6'
+          displayName: 'Use Python 3.8'
           inputs:
-              versionSpec: '3.8.6'
+              versionSpec: '3.8'
               addToPath: true
               architecture: 'x64'
               githubToken: $(githubToken)
