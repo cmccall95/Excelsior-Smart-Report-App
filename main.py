@@ -1,4 +1,5 @@
 #main : Creates webapp
+import logging
 import platform
 import dash_bootstrap_components as dbc
 import dash
@@ -27,6 +28,9 @@ import base64
 
 # pd.set_option('display.max_columns', None)
 # pd.set_option('display.max_rows', None)
+
+# Enable Logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s')
 
 # Register the custom namespace
 ns = Namespace("myNamespace", "tabulator")
@@ -140,7 +144,7 @@ if __name__ == '__main__': #Get the Correct Operating System to Run Gunicorn(Lin
     # Detect the operating system
     os_name = platform.system()
 
-    print(os_name)
+    logging.info("CURRENT PLATFORM IS (PYTHON): %s", os_name)
 
     if os_name == 'Linux':
         # Run the app with Gunicorn or another Linux-compatible server
