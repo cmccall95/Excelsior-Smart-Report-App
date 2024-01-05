@@ -1,4 +1,5 @@
 #main : Creates webapp
+import platform
 import dash_bootstrap_components as dbc
 import dash
 from flask import Flask
@@ -18,7 +19,7 @@ import urllib.parse as parse
 from waitress import serve
 #from flask_cors import CORS #<< Simulate Cors
 
-#http://localhost:8000/?parentRid=123
+#http://localhost:3001/?parentRid=123
 
 from dotenv import load_dotenv
 import os
@@ -133,8 +134,21 @@ def update_record_id(search):
     
     return dynamic_layout
 
-# if __name__ == '__main__': #Waitress Local Server for testing #No need for this for the Azure
-#     serve(app.server, host="0.0.0.0", port=8000)
+if __name__ == '__main__': #Get the Correct Operating System to Run Gunicorn(Linux) or Waitress (Windows) #Waitress Local Server for testing #No need for this for the Azure
+    # Detect the operating system
+    os_name = platform.system()
 
+    print(os_name)
 
+    if os_name == 'Linux':
+        # Run the app with Gunicorn or another Linux-compatible server
+        # This part will not execute directly in the script; you typically run Gunicorn through command line
+        # Example: `gunicorn -w 4 -b 0.0.0.0:3001 main:flask_server`
+        pass
 
+    elif os_name == 'Windows':
+        # Run the app with Waitress on Windows
+        serve(app.server, host='0.0.0.0', port=3001)
+        #serve(app.server, host="0.0.0.0", port=3001)
+        
+        #http://localhost:3001/?parentRid=123

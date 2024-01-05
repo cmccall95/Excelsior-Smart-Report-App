@@ -16,7 +16,7 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>Excelsior Smart Report V3</Name>
     <RootNamespace>Excelsior Smart Report V3</RootNamespace>
-    <InterpreterId>MSBuild|vir_env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|vir_env39|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +27,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Interpreter Include="vir_env39\">
+      <Id>vir_env39</Id>
+      <Version>3.9</Version>
+      <Description>vir_env39 (Python 3.9 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
     <Interpreter Include="vir_env\">
       <Id>vir_env</Id>
       <Version>3.8</Version>
