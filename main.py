@@ -34,6 +34,8 @@ ns = Namespace("myNamespace", "tabulator")
 #Arguments to be passed
 record_id = None
 
+#print(record_id)
+
 def test_layout(record_id):
     # assets_path = './assets'  # Adjust the path if necessary
     # try:
