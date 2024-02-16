@@ -16,6 +16,7 @@ dataclass-wizard==0.22.2
 EditorConfig==0.12.3
 Flask==2.3.3
 Flask-Caching==2.0.2
+fpdf==1.7.2
 gunicorn==21.2.0
 idna==3.6
 importlib-metadata==7.0.1
@@ -42,3 +43,4 @@ urllib3==2.1.0
 waitress==2.1.2
 Werkzeug==3.0.1
 zipp==3.17.0
+setuptools==69.0.3
